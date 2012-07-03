@@ -5,6 +5,9 @@ for Wikimania 2012 registrations.
 First, get 'export.csv' by loading this URL:
 https://secure.wikidc.org/wm/reg/badges/export
 
+Then, create a admin.cfg file (start by copying
+admin.cfg.EXAMPLE onto admin.cfg).
+
 Then, run 'make'.
 
 NOTE: You need python3 installed.
