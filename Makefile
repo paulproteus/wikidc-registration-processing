@@ -1,3 +1,7 @@
+completed_developer_day_attendees_extra_data.csv: completed_developer_day_attendees.csv
+	python user_id2more_data.py < completed_developer_day_attendees.csv > completed_developer_day_attendees_extra_data.csv.out
+	mv completed_developer_day_attendees_extra_data.csv.out completed_developer_day_attendees_extra_data.csv
+
 completed_developer_day_attendees.csv: completed.csv
 	python3 just_developer_days.py < completed.csv > completed_developer_day_attendees.csv.out
 	mv completed_developer_day_attendees.csv.out completed_developer_day_attendees.csv

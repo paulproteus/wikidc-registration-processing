@@ -6,6 +6,7 @@ import ConfigParser
 import multiprocessing
 import json
 import sys
+import csv
 
 config = ConfigParser.SafeConfigParser()
 config.read('admin.cfg')
@@ -84,8 +85,28 @@ def get_gender_and_email_in_bulk(list_of_user_ids):
     result = {}
     for i in range(POOL_SIZE):
         result.update(queue.get())
-    # Finally, we print it to stdout
-    json.dump(result, sys.stdout)
+
+    return result
 
 if __name__ == '__main__':
-    get_gender_and_email_in_bulk(map(int, ['27', '31', '32', '34', '36', '44', '52', '53', '60', '62', '63', '70', '72', '74', '75', '83', '88', '89', '92', '117', '119', '126', '133', '136', '134', '138', '132', '144', '17', '149', '158', '160', '163', '167', '171', '173']))
+    # Consume CSV on stdin
+    data = []
+    in_data = csv.DictReader(sys.stdin)
+    for datum in in_data:
+        data.append(datum)
+
+    # Grab just the user IDs
+    user_ids = [int(thing['Uid']) for thing in data]
+    user_ids2extra_data = get_gender_and_email_in_bulk(user_ids)
+    for thing in data:
+        extra_data = user_ids2extra_data[int(thing['Uid'])]
+        thing.update(extra_data)
+
+    out_writer = csv.DictWriter(sys.stdout, fieldnames = thing.keys())
+
+    # Add header
+    out_writer.writerow(dict((f,f) for f in out_writer.fieldnames) )
+
+    for datum in data:
+        out_writer.writerow(datum)
+
