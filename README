@@ -1,0 +1,12 @@
+This is a collection of scripts that enable
+the reasonable (?) processing of exports from Drupal
+for Wikimania 2012 registrations.
+
+First, get 'export.csv' by loading this URL:
+https://secure.wikidc.org/wm/reg/badges/export
+
+Then, run 'make'.
+
+NOTE: You need python3 installed.
+
+-- Asheesh.
